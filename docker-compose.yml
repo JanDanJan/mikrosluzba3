@@ -7,7 +7,7 @@ services:
   app:
     build: .
     environment:
-      POSTGRES_DSN: "postgresql+asyncpg://walrus:walrus@localhost:55432/walrus"
+      POSTGRES_DSN: "postgresql+psycopg2://walrus:walrus@localhost:55432/walrus"
       KAFKA_BOOTSTRAP: KAFKA_HOST:9092
       TOPIC_READY: data.ready
       TOPIC_DONE: compute.done
