@@ -9,7 +9,7 @@ services:
     networks: [walrus-net]
     environment:
       POSTGRES_DSN: "postgresql+asyncpg://walrus:walrus@walrus-db:5432/walrus"
-      KAFKA_BOOTSTRAP: KAFKA_HOST:9092
+      KAFKA_BOOTSTRAP: localhost:9092
       TOPIC_READY: data.ready
       TOPIC_DONE: compute.done
     ports:
