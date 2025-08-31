@@ -138,8 +138,7 @@ async def on_startup():
     # Start Kafka producer
     global producer
     producer = AIOKafkaProducer(
-        bootstrap_servers=settings.KAFKA_BOOTSTRAP,
-        value_serializer=lambda v: json.dumps(v).encode("utf-8"),
+        bootstrap_servers=settings.KAFKA_BOOTSTRAP
     )
     await producer.start()
     logger.info("Kafka producer started.")
