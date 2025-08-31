@@ -80,6 +80,7 @@ consumer_task: Optional[asyncio.Task] = None
 # --------------------
 BASE_MOCKS: List[Dict] = [
     dict(
+        id=100,
         sensor_identification="meter-01",
         description="Main corridor smart meter",
         power=120.5,     # Watts
@@ -89,6 +90,7 @@ BASE_MOCKS: List[Dict] = [
         room_id=101
     ),
     dict(
+        id=101,
         sensor_identification="meter-02",
         description="Kitchen meter",
         power=850.2,
@@ -98,6 +100,7 @@ BASE_MOCKS: List[Dict] = [
         room_id=102
     ),
     dict(
+        id=102,
         sensor_identification="meter-03",
         description="Server room meter",
         power=1540.0,
@@ -107,6 +110,7 @@ BASE_MOCKS: List[Dict] = [
         room_id=301
     ),
     dict(
+        id=103,
         sensor_identification="meter-04",
         description="Office lighting circuit",
         power=420.0,
