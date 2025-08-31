@@ -18,6 +18,7 @@ from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.ext.asyncio import create_async_engine
 
 from aiokafka import AIOKafkaProducer, AIOKafkaConsumer
+import random
 
 
 # --------------------
@@ -145,6 +146,23 @@ async def on_startup():
     consumer_task = loop.create_task(consume_completion())
     logger.info("Kafka consumer task started (topic: %s).", settings.TOPIC_DONE)
 
+def _fmt(v) -> str:
+    if v is None:
+        return ""
+    # ensure no raw pipes in text fields to keep the format parseable
+    return str(v).replace("|", r"\|")
+
+def electric_row_to_pipe(row: dict, correlation_id: str) -> str:
+    """
+    Produce a pipe-separated event line from the electric_sensor row.
+    Order: sensor_identification|time_stamp|description|power|voltage|energy|curent|room_id|correlation_id
+    """
+    return "|".join([
+        str(random.randint(1,10)),
+        "electric_sensor",
+        _fmt(row.get("id")),
+    ])
+
 
 @app.on_event("shutdown")
 async def on_shutdown():
@@ -222,24 +240,18 @@ async def run_insert_and_publish(body: RunRequest = Body(default=RunRequest())):
             await conn.execute(electric_sensor.insert().values(**row))
             inserted_count += 1
 
-            event = {
-                "event": "data_ready",
-                "correlation_id": str(uuid4()),
-                "sensor_identification": row["sensor_identification"],
-                "time_stamp": row["time_stamp"],
-                "room_id": row.get("room_id"),
-                "source": "mock-electric-sensor-ms",
-            }
-            await producer.send_and_wait(settings.TOPIC_READY, event)
-            published_count += 1
-            logger.info("Inserted row for sensor=%s; published input-topic",
-                        row["sensor_identification"])
+            # build pipe-separated event from inserted row
+            correlation_id = str(uuid4())
+            event_str = electric_row_to_pipe(row, correlation_id)
 
-    return {
-        "inserted": inserted_count,
-        "published": published_count,
-        "topic_published_to": settings.TOPIC_READY,
-    }
+            # publish as bytes (since producer is byte-oriented)
+            await producer.send_and_wait(settings.TOPIC_READY, event_str.encode("utf-8"))
+            published_count += 1
+
+            logger.info(
+                "Inserted row sensor=%s; published pipe event to %s",
+                row["sensor_identification"], settings.TOPIC_READY
+            )
 
 
 if __name__ == "__main__":
