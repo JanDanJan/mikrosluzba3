@@ -1,6 +1,6 @@
 fastapi==0.115.0
 uvicorn[standard]==0.30.6
 sqlalchemy[asyncio]==2.0.34
-psycopg2
+psycopg2-binary>=2.9
 aiokafka==0.10.0
 pydantic-settings==2.5.2
