@@ -6,11 +6,11 @@ networks:
 services:
   app:
     build: .
+    networks: [walrus-net]
     environment:
-      POSTGRES_DSN: "postgresql+asyncpg://walrus:walrus@localhost:55432/walrus"
+      POSTGRES_DSN: "postgresql+asyncpg://walrus:walrus@walrus-db:5432/walrus"
       KAFKA_BOOTSTRAP: KAFKA_HOST:9092
       TOPIC_READY: data.ready
       TOPIC_DONE: compute.done
     ports:
       - "8081:8000"
-    networks: [walrus-net]

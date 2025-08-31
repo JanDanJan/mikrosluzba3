@@ -24,7 +24,7 @@ from aiokafka import AIOKafkaProducer, AIOKafkaConsumer
 # Settings
 # --------------------
 class Settings(BaseSettings):
-    POSTGRES_DSN: str = "postgresql+asyncpg://walrus:walrus@localhost:55432/walrus"
+    POSTGRES_DSN: str = "postgresql+asyncpg://walrus:walrus@walrus-db:5432/walrus"
     KAFKA_BOOTSTRAP: str = "localhost:9092"
     TOPIC_READY: str = "input-topic"
     TOPIC_DONE: str = "calc.completed"
