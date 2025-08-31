@@ -226,7 +226,7 @@ async def run_insert_and_publish(body: RunRequest = Body(default=RunRequest())):
     now_iso = datetime.now(timezone.utc).isoformat()
 
     # build n records by cycling base mocks; set time_stamp per-record to current ISO
-    src = list(islice(BASE_MOCKS), n)
+    src = list(BASE_MOCKS)
 
     inserted_count = 0
     published_count = 0
