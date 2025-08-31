@@ -1,7 +1,7 @@
 networks:
-  external_net:
+  walrus-net:
     external: true
-    name: shared-db-network
+    name: walrus-net
 
 services:
   app:
