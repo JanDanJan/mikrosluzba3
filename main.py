@@ -97,7 +97,7 @@ BASE_MOCKS: List[Dict] = [
         voltage=229.0,
         energy=3.10,
         curent=3.72,
-        room_id=102
+        room_id=1000
     ),
     dict(
         id=102,
