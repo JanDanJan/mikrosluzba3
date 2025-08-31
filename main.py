@@ -87,7 +87,7 @@ BASE_MOCKS: List[Dict] = [
         voltage=230.0,   # Volts
         energy=0.45,     # kWh
         curent=0.52,     # Amps (typo kept to match column name)
-        room_id=101
+        room_id=1000
     ),
     dict(
         id=101,
@@ -107,7 +107,7 @@ BASE_MOCKS: List[Dict] = [
         voltage=231.0,
         energy=5.75,
         curent=6.66,
-        room_id=301
+        room_id=1000
     ),
     dict(
         id=103,
@@ -117,7 +117,7 @@ BASE_MOCKS: List[Dict] = [
         voltage=230.0,
         energy=1.80,
         curent=1.83,
-        room_id=210
+        room_id=1000
     ),
 ]
 
